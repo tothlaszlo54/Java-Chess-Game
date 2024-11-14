@@ -10,6 +10,7 @@ public class Piece {
         this.color=color;
         this.col=col;
         this.row=row;
+
     }
 
 }
