@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable {
 
-    public static final int WIDTH = 1100;
-    public static final int HEIGHT = 800;
+    public static final int WIDTH = 900;
+    public static final int HEIGHT = 640;
     final int FPS = 60;
     Thread gameThread;
 
@@ -114,7 +114,14 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g;
 
+        //board
         board.draw(g2);
+
+        //pieces
+        for(Piece p: simPieces){
+            p.draw(g2);
+        }
+
     }
 
 
