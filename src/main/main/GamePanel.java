@@ -10,11 +10,13 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
 
     Board board = new Board();
+    Mouse mouse= new Mouse();
 
     //Pieces
 
     public static ArrayList<Piece> pieces = new ArrayList<>();
     public static ArrayList<Piece> simPieces = new ArrayList<>();
+    Piece activeP;
 
     //Color
     public static final int WHITE =0;
@@ -24,6 +26,8 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(Color.black);
+        addMouseMotionListener(mouse);
+        addMouseListener(mouse);
 
         setPieces();
         copyPieces(pieces,simPieces);
