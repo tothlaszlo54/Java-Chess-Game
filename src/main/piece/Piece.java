@@ -54,6 +54,10 @@ public class Piece {
 
     }
 
+    public boolean canMove(int targetCol, int targetRow){
+        return false;
+    }
+
     public void draw(Graphics2D g2){
         g2.drawImage(image,x,y,Board.SQUARE_SIZE,Board.SQUARE_SIZE,null);
     }
