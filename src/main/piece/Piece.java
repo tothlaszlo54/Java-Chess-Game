@@ -8,6 +8,7 @@ public class Piece {
     public int x, y;
     public int col, row, preCol, preRow;
     public int color;
+    public Piece hittingP;
 
     public Piece(int color, int col, int row) {
         this.color = color;
@@ -54,6 +55,14 @@ public class Piece {
 
     }
 
+    public void resetPosition(){
+        col = preCol;
+        row = preRow;
+        x = getX(col);
+        y = getY(row);
+
+    }
+
     public boolean canMove(int targetCol, int targetRow){
         return false;
     }
@@ -62,6 +71,15 @@ public class Piece {
             return true;
         }
         return false;
+    }
+
+    public Piece getHittingP(int targetCol, int targetRow){
+        for (Piece piece : GamePanel.simPieces) {
+            if (piece.col == targetCol && piece.row == targetRow && piece != this){
+                return piece;
+            }
+        }
+        return null;
     }
 
     public void draw(Graphics2D g2){

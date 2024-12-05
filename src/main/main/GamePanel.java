@@ -137,6 +137,7 @@ public class GamePanel extends JPanel implements Runnable {
                 if (validSquare) {
                     activeP.upDatePosition();
                 } else {
+                    activeP.resetPosition();
                     activeP = null;
                 }
             }
@@ -177,11 +178,13 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         if (activeP != null) {
-            g2.setColor(Color.white);
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
-            g2.fillRect(activeP.col * Board.SQUARE_SIZE, activeP.row * Board.SQUARE_SIZE,
-                    Board.SQUARE_SIZE, Board.SQUARE_SIZE);
-
+            if (canMove){
+                g2.setColor(Color.white);
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
+                g2.fillRect(activeP.col * Board.SQUARE_SIZE, activeP.row * Board.SQUARE_SIZE,
+                        Board.SQUARE_SIZE, Board.SQUARE_SIZE);
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+            }
             //Draw the active piece in the end, so it won't be hidden by the board or the colored square
             activeP.draw(g2);
         }
