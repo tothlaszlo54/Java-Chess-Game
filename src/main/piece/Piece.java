@@ -57,6 +57,12 @@ public class Piece {
     public boolean canMove(int targetCol, int targetRow){
         return false;
     }
+    public boolean isWithinBoard(int targetCol, int targetRow){
+        if (targetCol>=0 && targetCol <=7 && targetRow>=0 && targetRow<=7){
+            return true;
+        }
+        return false;
+    }
 
     public void draw(Graphics2D g2){
         g2.drawImage(image,x,y,Board.SQUARE_SIZE,Board.SQUARE_SIZE,null);

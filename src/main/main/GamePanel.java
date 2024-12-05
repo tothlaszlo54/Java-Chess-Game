@@ -23,6 +23,10 @@ public class GamePanel extends JPanel implements Runnable {
     public static final int BLACK = 1;
     int currentColor = WHITE;
 
+    //Booleans
+    boolean canMove;
+    boolean validSquare;
+
     public GamePanel() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(Color.black);
@@ -128,21 +132,34 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         ///Mouse Button Released///
-        if(mouse.pressed == false){
-            if(activeP !=null){
-                activeP.upDatePosition();
-                activeP=null;
+        if (mouse.pressed == false) {
+            if (activeP != null) {
+                if (validSquare) {
+                    activeP.upDatePosition();
+                } else {
+                    activeP = null;
+                }
             }
         }
 
     }
 
     private void simulate() {
-            //If a piece is bieng held, update its position
-        activeP.x = mouse.x-Board.HALF_SQUARE_SIZE;
-        activeP.y = mouse.y-Board.HALF_SQUARE_SIZE;
+
+        canMove = false;
+        validSquare = false;
+
+        //If a piece is bieng held, update its position
+        activeP.x = mouse.x - Board.HALF_SQUARE_SIZE;
+        activeP.y = mouse.y - Board.HALF_SQUARE_SIZE;
         activeP.col = activeP.getCol(activeP.x);
         activeP.row = activeP.getRow(activeP.y);
+
+        //check if the pieces is hovering over a reachable square
+        if (activeP.canMove(activeP.col, activeP.row)) {
+            canMove = true;
+            validSquare = true;
+        }
     }
 
     @Override
@@ -159,11 +176,11 @@ public class GamePanel extends JPanel implements Runnable {
             p.draw(g2);
         }
 
-        if (activeP != null){
+        if (activeP != null) {
             g2.setColor(Color.white);
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.7f));
-            g2.fillRect(activeP.col*Board.SQUARE_SIZE,activeP.row*Board.SQUARE_SIZE,
-                    Board.SQUARE_SIZE,Board.SQUARE_SIZE);
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
+            g2.fillRect(activeP.col * Board.SQUARE_SIZE, activeP.row * Board.SQUARE_SIZE,
+                    Board.SQUARE_SIZE, Board.SQUARE_SIZE);
 
             //Draw the active piece in the end, so it won't be hidden by the board or the colored square
             activeP.draw(g2);
