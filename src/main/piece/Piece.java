@@ -47,6 +47,15 @@ public class Piece {
         return (y+Board.HALF_SQUARE_SIZE)/Board.SQUARE_SIZE;
     }
 
+    public int getIndex(){
+        for (int index = 0;index < GamePanel.simPieces.size(); index++){
+            if (GamePanel.simPieces.get(index) == this){
+                return index;
+            }
+        }
+        return 0;
+    }
+
     public void upDatePosition(){
         x = getX(col);
         y = getY(row);
@@ -80,6 +89,23 @@ public class Piece {
             }
         }
         return null;
+    }
+
+    public boolean isValidSquare(int targetCol, int targetRow){
+
+        hittingP = getHittingP(targetCol,targetRow);
+
+        if (hittingP == null){  // this square is VACANT
+            return true;
+        }else { //this square is OCCUPIED
+            if (hittingP.color != this.color){ // If the color is different, it can be captured
+                return true;
+            }else {
+                hittingP = null;
+            }
+        }
+
+        return false;
     }
 
     public void draw(Graphics2D g2){
