@@ -138,11 +138,11 @@ public class GamePanel extends JPanel implements Runnable {
                     //MOVE CONFIRMED
 
                     //Update the piece list in case a piece has been captured and removed during the simulation
-                    copyPieces(simPieces,pieces);
+                    copyPieces(simPieces, pieces);
                     activeP.upDatePosition();
                 } else {
                     // The move is not valid, so reset everything
-                    copyPieces(pieces,simPieces);
+                    copyPieces(pieces, simPieces);
                     activeP.resetPosition();
                     activeP = null;
                 }
@@ -158,7 +158,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         // Reset the piece list in every loop
         // This is basically for restoring the removed piece during the simulation
-        copyPieces(pieces,simPieces);
+        copyPieces(pieces, simPieces);
 
 
         //If a piece is bieng held, update its position
@@ -172,7 +172,7 @@ public class GamePanel extends JPanel implements Runnable {
             canMove = true;
 
             // If hitting a Piece, remove it from the list
-            if (activeP.hittingP != null){
+            if (activeP.hittingP != null) {
                 simPieces.remove(activeP.hittingP.getIndex());
             }
 
@@ -195,7 +195,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         if (activeP != null) {
-            if (canMove){
+            if (canMove) {
                 g2.setColor(Color.white);
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
                 g2.fillRect(activeP.col * Board.SQUARE_SIZE, activeP.row * Board.SQUARE_SIZE,
