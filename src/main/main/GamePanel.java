@@ -17,6 +17,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static ArrayList<Piece> pieces = new ArrayList<>();
     public static ArrayList<Piece> simPieces = new ArrayList<>();
     Piece activeP;
+    public static Piece castlingP;
 
     //Color
     public static final int WHITE = 0;
@@ -131,7 +132,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
 
-        ///Mouse Button Released///
+        ///MOUSE BUTTON RELEASED///
         if (mouse.pressed == false) {
             if (activeP != null) {
                 if (validSquare) {
@@ -140,6 +141,9 @@ public class GamePanel extends JPanel implements Runnable {
                     //Update the piece list in case a piece has been captured and removed during the simulation
                     copyPieces(simPieces, pieces);
                     activeP.upDatePosition();
+                    if (castlingP != null) {
+                        castlingP.upDatePosition();
+                    }
 
                     changePlayer();
 
@@ -163,6 +167,12 @@ public class GamePanel extends JPanel implements Runnable {
         // This is basically for restoring the removed piece during the simulation
         copyPieces(pieces, simPieces);
 
+        //Reset the castling piece's position
+        if (castlingP != null){
+            castlingP.col = castlingP.preCol;
+            castlingP.x = castlingP.getX(castlingP.col);
+            castlingP = null;
+        }
 
         //If a piece is bieng held, update its position
         activeP.x = mouse.x - Board.HALF_SQUARE_SIZE;
@@ -179,10 +189,22 @@ public class GamePanel extends JPanel implements Runnable {
                 simPieces.remove(activeP.hittingP.getIndex());
             }
 
+            checkCastling();
+
             validSquare = true;
         }
     }
 
+    private void checkCastling(){
+        if (castlingP != null){
+            if (castlingP.col == 0){
+                castlingP.col += 3;
+            } else if (castlingP.col == 7) {
+                castlingP.col -= 2;
+            }
+            castlingP.x = castlingP.getX(castlingP.col);
+        }
+    }
     private void changePlayer(){
         if(currentColor == WHITE){
             currentColor = BLACK;
@@ -221,13 +243,13 @@ public class GamePanel extends JPanel implements Runnable {
         //STATUS MESSAGES
 
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        g2.setFont(new Font("Book Antiqua",Font.PLAIN,40));
+        g2.setFont(new Font("Book Antiqua",Font.PLAIN,30));
         g2.setColor(Color.white);
 
         if (currentColor == WHITE){
-            g2.drawString("White's turn", 840,550);
+            g2.drawString("White's turn", 660,450);
         }else {
-            g2.drawString("Black's turn", 840,250);
+            g2.drawString("Black's turn", 660,200);
         }
     }
 
