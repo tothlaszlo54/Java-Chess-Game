@@ -12,7 +12,7 @@ public class Piece {
     public int col, row, preCol, preRow;
     public int color;
     public Piece hittingP;
-    public boolean moved;
+    public boolean moved, twoStepped;
 
     public Piece(int color, int col, int row) {
         this.color = color;
@@ -63,7 +63,12 @@ public class Piece {
 
     public void upDatePosition() {
 
-
+        //To check En Passant
+        if (type == Type.PAWN){
+            if (Math.abs(row-preRow) == 2){
+                twoStepped = true;
+            }
+        }
 
         x = getX(col);
         y = getY(row);
