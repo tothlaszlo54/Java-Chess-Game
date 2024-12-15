@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.lang.annotation.Target;
 
 public class Piece {
+
+    public Type type;
     public BufferedImage image;
     public int x, y;
     public int col, row, preCol, preRow;
@@ -60,6 +62,9 @@ public class Piece {
     }
 
     public void upDatePosition() {
+
+
+
         x = getX(col);
         y = getY(row);
         preCol = getCol(x);

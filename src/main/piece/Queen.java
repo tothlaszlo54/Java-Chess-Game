@@ -2,6 +2,8 @@ public class Queen extends Piece {
     public Queen(int color, int col, int row) {
         super(color, col, row);
 
+        type = Type.QUEEN;
+
         if (color == GamePanel.WHITE) {
             image = getImage("/piece/Queen-piece-white");
         } else {
